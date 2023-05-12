@@ -39,7 +39,7 @@ public class WordRelationModel {
         wordTwo = wordTwo.replaceAll("\\s+","");
     }
 
-    public boolean allowedCharacters() {
+    public boolean noAllowedCharacters() {
         return checkAllowedCharacters(wordOne) && !checkAllowedCharacters(wordTwo);
     }
 

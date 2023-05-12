@@ -1,5 +1,7 @@
 package com.jason;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,16 +15,29 @@ public class WordRelationService {
         this.wordRelationRepository = wordRelationRepository;
     }
 
-    public void saveRelationModel(WordRelationModel wordRelationModel) {
+    public ResponseEntity<String> saveRelationModel(WordRelationModel wordRelationModel) {
+        if (wordRelationModel.containsNoAllowedCharacters()) {
+            return respondNoAllowedCharacters();
+        }
+        return respondOkWithValidatedSave(wordRelationModel);
+    }
+
+    private ResponseEntity<String> respondOkWithValidatedSave(WordRelationModel wordRelationModel) {
         wordRelationModel.lowerCaseAndWhiteSpaceValidation();
         wordRelationRepository.save(wordRelationModel);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Created :" + wordRelationModel);
+    }
+
+    private ResponseEntity<String> respondNoAllowedCharacters() {
+        String response = "Only characters from A to Z (upper and lower case) and space allowed";
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     public List<WordRelationModel> returnAllEntries() {
         return wordRelationRepository.findAll();
     }
 
-    public List<WordRelationModel> filterByRelation(Integer filter){
+    public List<WordRelationModel> filterByRelation(Integer filter) {
         return wordRelationRepository.findRelation(filter);
     }
 

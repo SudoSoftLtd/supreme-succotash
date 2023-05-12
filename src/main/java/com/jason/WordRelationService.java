@@ -16,9 +16,15 @@ public class WordRelationService {
     }
 
     public ResponseEntity<String> saveRelationModel(WordRelationModel wordRelationModel) {
+
         if (wordRelationModel.containsNoAllowedCharacters()) {
             return respondNoAllowedCharacters();
         }
+
+        if (checkExistingRelationExists(wordRelationModel)) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Relation between words already established.");
+        }
+
         return respondOkWithValidatedSave(wordRelationModel);
     }
 
@@ -38,7 +44,23 @@ public class WordRelationService {
     }
 
     public List<WordRelationModel> filterByRelation(Integer filter) {
-        return wordRelationRepository.findRelation(filter);
+        return wordRelationRepository.filterRelation(filter);
+    }
+
+    public boolean checkExistingRelationExists(WordRelationModel wordRelationModel) {
+
+        String wordOne = wordRelationModel.getWordOne();
+        String wordTwo = wordRelationModel.getWordTwo();
+
+        try {
+            WordRelationModel dbModel = wordRelationRepository.findRelation(wordOne, wordTwo).get(0);
+            if (dbModel.getRelation() != wordRelationModel.getRelation()) {
+                return true;
+            }
+        } catch (Exception ignored) {
+        }
+
+        return false;
     }
 
 }

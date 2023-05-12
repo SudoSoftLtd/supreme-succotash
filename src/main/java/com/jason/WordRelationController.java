@@ -1,6 +1,5 @@
 package com.jason;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,14 +27,7 @@ public class WordRelationController {
 
     @PostMapping
     public ResponseEntity<String> newWordRelation(@RequestBody WordRelationModel newWordRelationRequest) {
-
-        if(newWordRelationRequest.noAllowedCharacters()){
-            String response = "Only characters from A to Z (upper and lower case) and space allowed";
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-
-        wordRelationService.saveRelationModel(newWordRelationRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Created :" + newWordRelationRequest);
+        return wordRelationService.saveRelationModel(newWordRelationRequest);
     }
 
 }

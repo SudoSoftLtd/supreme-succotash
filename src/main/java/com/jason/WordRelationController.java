@@ -27,9 +27,15 @@ public class WordRelationController {
     }
 
     @PostMapping
-    public ResponseEntity<WordRelationModel> newWordRelation(@RequestBody WordRelationModel newWordRelationRequest) {
+    public ResponseEntity<String> newWordRelation(@RequestBody WordRelationModel newWordRelationRequest) {
+
+        if(newWordRelationRequest.allowedCharacters()){
+            String response = "Only characters from A to Z (upper and lower case) and space allowed";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
         wordRelationService.saveRelationModel(newWordRelationRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newWordRelationRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Created :" + newWordRelationRequest);
     }
 
 }

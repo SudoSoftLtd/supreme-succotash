@@ -2,6 +2,8 @@ package com.jason;
 
 import jakarta.persistence.*;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Entity
 @Table(name="word_relation_table")
@@ -37,6 +39,24 @@ public class WordRelationModel {
         wordTwo = wordTwo.replaceAll("\\s+","");
     }
 
+    public boolean allowedCharacters() {
+        return checkAllowedCharacters(wordOne) && !checkAllowedCharacters(wordTwo);
+    }
+
+    private boolean checkAllowedCharacters(String word){
+        Pattern pattern = Pattern.compile("[^((0-9)|(a-z)|(A-Z)|\\s)]");
+        Matcher matcher = pattern.matcher(word);
+        return matcher.find();
+    }
+
+    @Override
+    public String toString() {
+        return "id=" + id +
+                ", wordOne='" + wordOne + '\'' +
+                ", wordTwo='" + wordTwo + '\'' +
+                ", relation=" + relation +
+                '}';
+    }
 
     enum Relation {
         SYNONYM,

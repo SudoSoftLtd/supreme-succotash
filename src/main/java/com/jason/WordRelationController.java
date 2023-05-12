@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1")
 public class WordRelationController {
@@ -12,6 +14,11 @@ public class WordRelationController {
 
     public WordRelationController(WordRelationService wordRelationService) {
         this.wordRelationService = wordRelationService;
+    }
+
+    @GetMapping
+    public List<WordRelationModel> allRecords() {
+        return wordRelationService.returnAllEntries();
     }
 
     @PostMapping

@@ -2,6 +2,8 @@ package com.jason;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class WordRelationService {
 
@@ -13,6 +15,10 @@ public class WordRelationService {
 
     public void saveRelationModel(WordRelationModel wordRelationModel) {
         wordRelationRepository.save(wordRelationModel);
+    }
+
+    public List<WordRelationModel> returnAllEntries() {
+        return wordRelationRepository.findAll();
     }
 
 }

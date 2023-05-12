@@ -25,6 +25,10 @@ public class WordRelationService {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Relation between words already established.");
         }
 
+        if (checkInverseRelation(wordRelationModel)) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Inverted Relation between words already exists.");
+        }
+
         return respondOkWithValidatedSave(wordRelationModel);
     }
 
@@ -48,7 +52,6 @@ public class WordRelationService {
     }
 
     public boolean checkExistingRelationExists(WordRelationModel wordRelationModel) {
-
         String wordOne = wordRelationModel.getWordOne();
         String wordTwo = wordRelationModel.getWordTwo();
 
@@ -56,12 +59,24 @@ public class WordRelationService {
             WordRelationModel dbModel = wordRelationRepository.findRelation(wordOne, wordTwo).get(0);
             if (dbModel.getRelation() != wordRelationModel.getRelation()) {
                 return true;
-            }
-        } catch (Exception ignored) {
-        }
+            }} catch (Exception ignored) {}
 
         return false;
     }
+
+    private boolean checkInverseRelation(WordRelationModel wordRelationModel) {
+
+        String wordOne = wordRelationModel.getWordOne();
+        String wordTwo = wordRelationModel.getWordTwo();
+
+        try {
+            if(wordRelationRepository.findRelation(wordTwo,wordOne).size()>0){
+                return true;
+            }} catch (Exception ignored) {}
+
+        return false;
+    }
+
 
 }
 

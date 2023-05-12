@@ -29,7 +29,7 @@ public class WordRelationController {
     @PostMapping
     public ResponseEntity<String> newWordRelation(@RequestBody WordRelationModel newWordRelationRequest) {
 
-        if(newWordRelationRequest.allowedCharacters()){
+        if(newWordRelationRequest.noAllowedCharacters()){
             String response = "Only characters from A to Z (upper and lower case) and space allowed";
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }

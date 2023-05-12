@@ -22,11 +22,13 @@ public class WordRelationService {
         }
 
         if (checkExistingRelationExists(wordRelationModel)) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Relation between words already established.");
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Relation between words already established.");
         }
 
         if (checkInverseRelation(wordRelationModel)) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Inverted Relation between words already exists.");
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Inverted Relation between words already exists.");
         }
 
         return respondOkWithValidatedSave(wordRelationModel);
@@ -65,7 +67,6 @@ public class WordRelationService {
     }
 
     private boolean checkInverseRelation(WordRelationModel wordRelationModel) {
-
         String wordOne = wordRelationModel.getWordOne();
         String wordTwo = wordRelationModel.getWordTwo();
 

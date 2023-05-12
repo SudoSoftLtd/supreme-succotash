@@ -21,5 +21,9 @@ public class WordRelationService {
         return wordRelationRepository.findAll();
     }
 
+    public List<WordRelationModel> filterByRelation(Integer filter){
+        return wordRelationRepository.findRelation(filter);
+    }
+
 }
 

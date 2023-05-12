@@ -21,6 +21,11 @@ public class WordRelationController {
         return wordRelationService.returnAllEntries();
     }
 
+    @GetMapping("filter/{number}")
+    public List<WordRelationModel> filter(@PathVariable final Integer number) {
+        return wordRelationService.filterByRelation(number);
+    }
+
     @PostMapping
     public ResponseEntity<WordRelationModel> newWordRelation(@RequestBody WordRelationModel newWordRelationRequest) {
         wordRelationService.saveRelationModel(newWordRelationRequest);

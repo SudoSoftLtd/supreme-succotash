@@ -14,6 +14,7 @@ public class WordRelationService {
     }
 
     public void saveRelationModel(WordRelationModel wordRelationModel) {
+        wordRelationModel.lowerCaseAndWhiteSpaceValidation();
         wordRelationRepository.save(wordRelationModel);
     }
 

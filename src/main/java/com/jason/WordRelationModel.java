@@ -1,7 +1,6 @@
 package com.jason;
 
 import jakarta.persistence.*;
-
 import java.util.Objects;
 
 @Entity
@@ -22,6 +21,22 @@ public class WordRelationModel {
     private String wordOne;
     private String wordTwo;
     private Relation relation;
+
+    public void lowerCaseAndWhiteSpaceValidation() {
+        toLowerCase();
+        remoteWhitespace();
+    }
+
+    private void toLowerCase(){
+        wordOne = wordOne.toLowerCase();
+        wordTwo = wordTwo.toLowerCase();
+    }
+
+    private void remoteWhitespace(){
+        wordOne = wordOne.replaceAll("\\s+","");
+        wordTwo = wordTwo.replaceAll("\\s+","");
+    }
+
 
     enum Relation {
         SYNONYM,

@@ -21,3 +21,8 @@ From terminal type:
 > CREATE DATABASE relation;
 
 
+
+Notes (//TODO):
+---
+use the filter API to find the inverse relation for task 4, 7. and 8.
+use 6 degrees of separation algo to solve task 9?

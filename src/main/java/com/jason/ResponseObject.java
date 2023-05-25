@@ -56,11 +56,11 @@ public class ResponseObject {
         }
     }
 
-    public void tooManyRequestsResponse() {
+    private void tooManyRequestsResponse() {
         setResponse(HttpStatus.TOO_MANY_REQUESTS, "");
     }
 
-    public void setResponse(HttpStatus status, String message) {
+    private void setResponse(HttpStatus status, String message) {
         response = ResponseEntity.status(status).body(message);
     }
 
